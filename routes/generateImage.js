@@ -1,6 +1,10 @@
 import OpenAI from "openai";
 
-const IMAGE_MODEL = process.env.IMAGE_MODEL || "gpt-image-1";
+// To switch models, set IMAGE_MODEL in Railway Variables:
+//   "dall-e-3"           reliable, works on all accounts (default)
+//   "gpt-image-1"        newer, requires approved access
+//   "gpt-image-1-mini"   cheaper version of gpt-image-1
+const IMAGE_MODEL = process.env.IMAGE_MODEL || "dall-e-3";
 
 let _client = null;
 function getClient() {
@@ -84,15 +88,30 @@ export async function generateTattooImage(req, res) {
 
   try {
     const openai = getClient();
+    const isGptImage = IMAGE_MODEL.startsWith("gpt-image");
+
     const response = await openai.images.generate({
       model: IMAGE_MODEL,
       prompt,
       n: 1,
       size: "1024x1024",
+      ...(isGptImage ? {} : { response_format: "b64_json" }),
     });
-    const b64 = response.data[0].b64_json;
-    if (!b64) throw new Error("No image data in OpenAI response.");
-    return res.json({ imageUrl: `data:image/png;base64,${b64}`, model: IMAGE_MODEL });
+
+    const item = response.data[0];
+
+    // gpt-image models return b64_json natively
+    // dall-e-3 returns b64_json when response_format is set
+    if (item.b64_json) {
+      return res.json({ imageUrl: `data:image/png;base64,${item.b64_json}`, model: IMAGE_MODEL });
+    }
+    // fallback: url (dall-e-3 default)
+    if (item.url) {
+      return res.json({ imageUrl: item.url, model: IMAGE_MODEL });
+    }
+
+    throw new Error("No image data in OpenAI response.");
+
   } catch (err) {
     console.error("[generate-image] error:", err?.message || err);
     const status = err?.status || 500;
