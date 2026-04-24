@@ -91,7 +91,7 @@ function buildPrompt({ idea, style, placement, colorMode, notes }) {
     colorDirective,
     `The design must be tattooable: clean composition, strong readable silhouette, no lines so thin they would blur in skin, no excessive texture that would not hold.`,
     `Present as isolated artwork on a pure white background. No skin, no body, no photo mockup, no background scene. Just the centered tattoo design with clean padding around it.`,
-    `High detail. Professional tattoo flash art quality. Studio-ready reference image.`,
+    `High detail. Photorealistic realism tattoo quality — looks like a photograph rendered in ink, deep shadows, smooth gradients, c`,
     `No text, labels, watermarks, or signatures anywhere in the image.`,
     notes && notes.trim() ? `Additional artist direction: ${notes.trim()}.` : null,
   ]
