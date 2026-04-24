@@ -85,14 +85,14 @@ function buildPrompt({ idea, style, placement, colorMode, notes }) {
     : "Rendered in bold vibrant color with strong ink-like saturation. Color blocking should be clean and tattooable. No muddy or over-blended color.";
 
   return [
-    `A professional tattoo design concept: ${idea}.`,
-    styleDirective,
+    `Create a high-contrast black and grey tattoo design in a graphic realism style. Subject: ${idea}.`,
+    `Style Requirements: Designed specifically for tattooing on skin, not digital illustration. Strong bold blacks with clean separation between light and dark areas. Limited midtones — prioritize contrast and readability. Smooth grey shading, no muddy gradients. Crisp linework and controlled edge transitions. Use intentional negative space for highlights and skin breaks.`,
+    `Composition: Centered, balanced, and structured for a tattoo layout. Clear focal point with supporting secondary elements. Background elements simplified and not overpowering the subject. Use framing elements such as ornaments, patterns, halos, or architecture to create depth.`,
+    `Detailing: High detail in focal areas such as face, eyes, and main subject. Simplified detail in secondary areas to maintain clarity. No excessive micro-detail that would blur over time.`,
+    `Lighting: Dramatic directional lighting from top or side. Strong highlights and deep shadows for dimensionality. Emphasize form through contrast, not color.`,
+    `Tattoo Rules: No color. No text. No glowing effects. No blur or painterly softness. Avoid overly thin lines. Must age well on skin.`,
     `The design is ${placementCtx}.`,
-    colorDirective,
-    `The design must be tattooable: clean composition, strong readable silhouette, no lines so thin they would blur in skin, no excessive texture that would not hold.`,
-    `Present as isolated artwork on a pure white background. No skin, no body, no photo mockup, no background scene. Just the centered tattoo design with clean padding around it.`,
-    `High detail. Photorealistic realism tattoo quality — looks like a photograph rendered in ink, deep shadows, smooth gradients, c`,
-    `No text, labels, watermarks, or signatures anywhere in the image.`,
+    `Output: Clean black and grey tattoo design on a white background only. No skin, no body, no mockup. Professional tattoo flash quality.`,
     notes && notes.trim() ? `Additional artist direction: ${notes.trim()}.` : null,
   ]
     .filter(Boolean)
