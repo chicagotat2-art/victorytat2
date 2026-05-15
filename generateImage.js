@@ -152,7 +152,8 @@ export async function generateTattooImage(req, res) {
       model: IMAGE_MODEL,
       prompt,
       n: 1,
-      size: "1024x1792",
+      size: "1024x1024",
+      quality: "high",
     });
 
     const b64 = response.data[0].b64_json;
